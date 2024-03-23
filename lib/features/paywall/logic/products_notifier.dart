@@ -13,11 +13,21 @@ class ProductsNotifier extends ChangeNotifier {
   bool _loading = false;
   bool get loading => _loading;
 
+  bool _isError = false;
+  bool get isError => _isError;
+
   Future<void> fetchProducts() async {
+    _isError = false;
     _loading = true;
     notifyListeners();
-    _products = await _paywallRepository.getProducts();
-    _loading = false;
-    notifyListeners();
+    try {
+      _products = await _paywallRepository.getProducts();
+      _loading = false;
+      notifyListeners();
+    } on Exception {
+      _isError = true;
+      _loading = false;
+      notifyListeners();
+    }
   }
 }
