@@ -26,6 +26,7 @@ class PaywallScreen extends StatelessWidget {
             const SizedBox(height: 16),
             if (productsNotifier.products.isEmpty)
               ElevatedButton(
+                key: const Key('fetch_products_button'),
                 onPressed: () => productsNotifier.fetchProducts(),
                 child: productsNotifier.loading ? const CircularProgressIndicator() : const Text('Fetch products'),
               )
