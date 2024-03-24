@@ -44,6 +44,13 @@ class MockProductsNotifier extends _i1.Mock implements _i2.ProductsNotifier {
       ) as bool);
 
   @override
+  bool get isError => (super.noSuchMethod(
+        Invocation.getter(#isError),
+        returnValue: false,
+        returnValueForMissingStub: false,
+      ) as bool);
+
+  @override
   bool get hasListeners => (super.noSuchMethod(
         Invocation.getter(#hasListeners),
         returnValue: false,

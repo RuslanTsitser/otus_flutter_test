@@ -29,10 +29,11 @@ import 'package:mockito/mockito.dart' as _i1;
 /// See the documentation for Mockito's code generation for more information.
 class MockPaywallRepository extends _i1.Mock implements _i2.PaywallRepository {
   @override
-  _i3.Future<List<_i4.PaywallProduct>> getProducts() => (super.noSuchMethod(
+  _i3.Future<List<_i4.PaywallProduct>> getProducts([int? count]) =>
+      (super.noSuchMethod(
         Invocation.method(
           #getProducts,
-          [],
+          [count],
         ),
         returnValue:
             _i3.Future<List<_i4.PaywallProduct>>.value(<_i4.PaywallProduct>[]),

@@ -21,7 +21,7 @@ class ProductsNotifier extends ChangeNotifier {
     _loading = true;
     notifyListeners();
     try {
-      _products = await _paywallRepository.getProducts();
+      _products = await _paywallRepository.getProducts(1);
       _loading = false;
       notifyListeners();
     } on Exception {

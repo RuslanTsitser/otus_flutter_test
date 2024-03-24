@@ -63,6 +63,48 @@ void main() {
           expect(find.text('Product 2'), findsOneWidget);
         },
       );
+
+      testWidgets(
+        'test captured arguments in mocks',
+        (tester) async {
+          when(() => mockPaywallRepository.getProducts(any())).thenAnswer((_) async {
+            await Future.delayed(const Duration(seconds: 2));
+            return const [
+              PaywallProduct(title: 'Product 1', price: '10'),
+              PaywallProduct(title: 'Product 2', price: '20'),
+            ];
+          });
+          await tester.pumpWidget(
+            MultiProvider(
+              providers: [
+                ChangeNotifierProvider(create: (context) => ProductsNotifier(mockPaywallRepository)),
+              ],
+              child: const MaterialApp(
+                home: PaywallScreen(),
+              ),
+            ),
+          );
+
+          expect(find.byType(CircularProgressIndicator), findsNothing);
+          expect(find.byType(ElevatedButton), findsOneWidget);
+          expect(find.text('Fetch products'), findsOneWidget);
+
+          await tester.tap(find.byKey(const Key('fetch_products_button')));
+
+          await tester.pump();
+          expect(find.byType(CircularProgressIndicator), findsOneWidget);
+          await tester.pump(const Duration(seconds: 1));
+          expect(find.byType(CircularProgressIndicator), findsOneWidget);
+
+          await tester.pump(const Duration(seconds: 2));
+          expect(find.byType(CircularProgressIndicator), findsNothing);
+          expect(find.text('Product 1'), findsOneWidget);
+          expect(find.text('Product 2'), findsOneWidget);
+
+          final capturedArg = verify(() => mockPaywallRepository.getProducts(captureAny())).captured;
+          expect(capturedArg, equals([1]));
+        },
+      );
     },
   );
 }

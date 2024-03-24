@@ -5,7 +5,7 @@ class PaywallRepositoryImpl implements PaywallRepository {
   // TODO: add dependency to service like Apphud, RevenueCat, etc.
 
   @override
-  Future<List<PaywallProduct>> getProducts() async {
+  Future<List<PaywallProduct>> getProducts([int? count]) async {
     await Future.delayed(const Duration(seconds: 2));
     return [
       const PaywallProduct(
