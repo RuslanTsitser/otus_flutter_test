@@ -17,13 +17,10 @@ void main() {
       PaywallProduct(title: 'Product 1', price: '10'),
       PaywallProduct(title: 'Product 2', price: '20'),
     ];
+
     setUp(() {
       mockPaywallRepository = MockPaywallRepository();
       productsNotifier = ProductsNotifier(mockPaywallRepository);
-      when(mockPaywallRepository.getProducts()).thenAnswer((_) async {
-        await Future.delayed(const Duration(seconds: 1));
-        return mockProducts;
-      });
     });
 
     tearDown(() {
@@ -32,16 +29,20 @@ void main() {
     });
 
     test('fetchProducts should update products list and loading status', () async {
+      when(mockPaywallRepository.getProducts(any)).thenAnswer((_) async {
+        await Future.delayed(const Duration(seconds: 1));
+        return mockProducts;
+      });
       fakeAsync((async) {
-        expect(productsNotifier.loading, false);
-        expect(productsNotifier.products, []);
+        expect(productsNotifier.loading, isFalse);
+        expect(productsNotifier.products, isEmpty);
 
         productsNotifier.fetchProducts();
-        expect(productsNotifier.loading, true);
-        expect(productsNotifier.products, []);
+        expect(productsNotifier.loading, isTrue);
+        expect(productsNotifier.products, isEmpty);
 
         async.elapse(const Duration(seconds: 3));
-        expect(productsNotifier.loading, false);
+        expect(productsNotifier.loading, isFalse);
         expect(productsNotifier.products, mockProducts);
       });
     });
@@ -49,13 +50,13 @@ void main() {
     test(
       'fetchProducts should return exception',
       () async {
-        when(mockPaywallRepository.getProducts()).thenThrow(Exception('no internet'));
+        when(mockPaywallRepository.getProducts(any)).thenThrow(Exception('no internet'));
 
-        expect(productsNotifier.loading, false);
-        expect(productsNotifier.products, []);
+        expect(productsNotifier.loading, isFalse);
+        expect(productsNotifier.products, isEmpty);
 
         productsNotifier.fetchProducts();
-        expect(productsNotifier.isError, true);
+        expect(productsNotifier.isError, isTrue);
       },
     );
   });
