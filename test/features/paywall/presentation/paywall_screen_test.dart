@@ -28,7 +28,7 @@ void main() {
         'and display products when products are fetched\n'
         'and display loading indicator when fetching products',
         (tester) async {
-          when(() => mockPaywallRepository.getProducts()).thenAnswer((_) async {
+          when(() => mockPaywallRepository.getProducts(any())).thenAnswer((_) async {
             await Future.delayed(const Duration(seconds: 2));
             return const [
               PaywallProduct(title: 'Product 1', price: '10'),
