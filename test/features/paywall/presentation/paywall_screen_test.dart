@@ -25,8 +25,8 @@ void main() {
 
       testWidgets(
         'should not display loading indicator\n'
-        'and display products when products are fetched\n'
-        'and display loading indicator when fetching products',
+        'and display loading indicator when fetching products\n'
+        'and display products when products are fetched\n',
         (tester) async {
           when(() => mockPaywallRepository.getProducts(any())).thenAnswer((_) async {
             await Future.delayed(const Duration(seconds: 2));
@@ -50,7 +50,7 @@ void main() {
           expect(find.byType(ElevatedButton), findsOneWidget);
           expect(find.text('Fetch products'), findsOneWidget);
 
-          await tester.tap(find.byKey(const Key('fetch_products_button')));
+          await tester.tap(find.byType(ElevatedButton));
 
           await tester.pump();
           expect(find.byType(CircularProgressIndicator), findsOneWidget);

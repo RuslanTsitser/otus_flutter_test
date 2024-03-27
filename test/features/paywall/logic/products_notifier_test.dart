@@ -33,7 +33,7 @@ void main() {
         await Future.delayed(const Duration(seconds: 1));
         return mockProducts;
       });
-      fakeAsync((async) {
+      fakeAsync((fAsync) {
         expect(productsNotifier.loading, isFalse);
         expect(productsNotifier.products, isEmpty);
 
@@ -41,7 +41,7 @@ void main() {
         expect(productsNotifier.loading, isTrue);
         expect(productsNotifier.products, isEmpty);
 
-        async.elapse(const Duration(seconds: 3));
+        fAsync.elapse(const Duration(seconds: 3));
         expect(productsNotifier.loading, isFalse);
         expect(productsNotifier.products, mockProducts);
       });
