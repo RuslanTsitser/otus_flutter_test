@@ -19,7 +19,7 @@ void main() async {
 
     await expectLater(
       find.byType(ProductLabel),
-      matchesGoldenFile('myWidget.png'),
+      matchesGoldenFile('goldens/ProductLabel.png'),
     );
   });
 }
