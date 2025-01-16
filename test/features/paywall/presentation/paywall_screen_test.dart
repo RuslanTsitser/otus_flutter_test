@@ -13,6 +13,22 @@ void main() {
   group(
     'PaywallScreen',
     () {
+      testWidgets('find FAB', (tester) async {
+        await tester.pumpWidget(
+          ChangeNotifierProvider(
+            create: (context) => ProductsNotifier(MockPaywallRepository()),
+            child: MaterialApp(
+              home: PaywallScreen(),
+            ),
+          ),
+        );
+        await tester.pumpAndSettle();
+        expect(find.byKey(Key('refresh_button')), findsOneWidget);
+        expect(find.byKey(Key('button')), findsNothing);
+        await tester.press(find.byType(ElevatedButton));
+        await tester.pump();
+      });
+
       late PaywallRepository mockPaywallRepository;
 
       setUpAll(() {

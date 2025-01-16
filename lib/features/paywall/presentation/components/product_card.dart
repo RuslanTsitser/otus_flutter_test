@@ -13,8 +13,14 @@ class ProductCard extends StatelessWidget {
     return CustomPaint(
       painter: ProductCardPainter(product),
       child: ListTile(
-        title: Text(product.title),
-        subtitle: Text(product.price),
+        title: Text(
+          product.title,
+          style: TextStyle(fontFamily: 'Montserrat'),
+        ),
+        subtitle: Text(
+          product.price,
+          style: TextStyle(fontFamily: 'Montserrat'),
+        ),
       ),
     );
   }

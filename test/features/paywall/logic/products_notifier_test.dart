@@ -3,6 +3,7 @@ import 'package:flutter_application_1/features/paywall/domain/paywall_product.da
 import 'package:flutter_application_1/features/paywall/domain/paywall_repository.dart';
 import 'package:flutter_application_1/features/paywall/logic/products_notifier.dart';
 import 'package:flutter_test/flutter_test.dart';
+// import 'package:mocktail/mocktail.dart';
 import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
 
@@ -30,7 +31,7 @@ void main() {
 
     test('fetchProducts should update products list and loading status', () async {
       when(mockPaywallRepository.getProducts(any)).thenAnswer((_) async {
-        await Future.delayed(const Duration(seconds: 1));
+        await Future.delayed(const Duration(seconds: 10));
         return mockProducts;
       });
       fakeAsync((fAsync) {
@@ -40,8 +41,8 @@ void main() {
         productsNotifier.fetchProducts();
         expect(productsNotifier.loading, isTrue);
         expect(productsNotifier.products, isEmpty);
-
-        fAsync.elapse(const Duration(seconds: 3));
+        // await Future.delayed(const Duration(seconds: 2));
+        fAsync.elapse(const Duration(seconds: 11));
         expect(productsNotifier.loading, isFalse);
         expect(productsNotifier.products, mockProducts);
       });

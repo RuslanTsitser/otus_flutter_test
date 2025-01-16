@@ -1,5 +1,4 @@
 import 'package:device_preview/device_preview.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/features/paywall/data/paywall_repository_impl.dart';
 import 'package:flutter_application_1/features/paywall/logic/products_notifier.dart';
@@ -17,7 +16,7 @@ class MainApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return DevicePreview(
-        enabled: kDebugMode,
+        enabled: false,
         builder: (context) {
           return ChangeNotifierProvider(
             create: (context) => ProductsNotifier(PaywallRepositoryImpl()),
